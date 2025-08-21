@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { CheckCircle } from "lucide-react"
+import type React from "react";
+import { CheckCircle } from "lucide-react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   ChevronDown,
   ExternalLink,
@@ -27,29 +27,29 @@ import {
   Database,
   Scale,
   Lock,
-} from "lucide-react"
-import { AnimatedWaves } from "@/components/animated-waves"
-import { useScrollAnimation } from "@/hooks/use-scroll-animation"
-import { EnhancedDemo } from "@/components/enhanced-demo"
+} from "lucide-react";
+import { AnimatedWaves } from "@/components/animated-waves";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { EnhancedDemo } from "@/components/enhanced-demo";
 import {
   ParticleSystem,
   MorphingShape,
   FloatingElements,
   GlowingOrb,
   TypewriterText,
-} from "@/components/enhanced-animations"
-import { HeroSVG, VoiceWaveSVG } from "@/components/svg-graphics"
+} from "@/components/enhanced-animations";
+import { HeroSVG, VoiceWaveSVG } from "@/components/svg-graphics";
 
 function AnimatedSection({
   children,
   className = "",
   delay = 0,
 }: {
-  children: React.ReactNode
-  className?: string
-  delay?: number
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
 }) {
-  const { ref, isVisible } = useScrollAnimation()
+  const { ref, isVisible } = useScrollAnimation();
 
   return (
     <div
@@ -61,106 +61,131 @@ function AnimatedSection({
     >
       {children}
     </div>
-  )
+  );
 }
 
 export default function CallAgent() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isDemoOpen, setIsDemoOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
-      {/* Custom CSS for animations */}
       <style jsx global>{`
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
-        
+
         @keyframes slideUp {
-          from { 
+          from {
             opacity: 0;
             transform: translateY(50px);
           }
-          to { 
+          to {
             opacity: 1;
             transform: translateY(0);
           }
         }
-        
+
         @keyframes slideIn {
-          from { 
+          from {
             opacity: 0;
             transform: translateX(-20px);
           }
-          to { 
+          to {
             opacity: 1;
             transform: translateX(0);
           }
         }
-        
+
         @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
+          0%,
+          100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
         }
-        
+
         @keyframes glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
-          50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+          0%,
+          100% {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+          }
+          50% {
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+          }
         }
-        
+
         .animate-fadeIn {
           animation: fadeIn 0.3s ease-out;
         }
-        
+
         .animate-slideUp {
           animation: slideUp 0.4s ease-out;
         }
-        
+
         .animate-slideIn {
           animation: slideIn 0.3s ease-out;
         }
-        
+
         .animate-float {
           animation: float 3s ease-in-out infinite;
         }
-        
+
         .animate-glow {
           animation: glow 2s ease-in-out infinite;
         }
-        
+
         .hover-lift {
           transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .hover-lift:hover {
           transform: translateY(-12px) scale(1.02);
-          box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
         }
-        
+
         .hover-scale {
           transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .hover-scale:hover {
           transform: scale(1.05);
         }
-        
+
         .gradient-text {
-          background: linear-gradient(45deg, #06B6D4, #3B82F6, #8B5CF6, #EC4899);
+          background: linear-gradient(
+            45deg,
+            #06b6d4,
+            #3b82f6,
+            #8b5cf6,
+            #ec4899
+          );
           background-size: 300% 300%;
           animation: gradientShift 4s ease infinite;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
-        
+
         @keyframes gradientShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
         }
-        
+
         .glass-effect {
           background: rgba(255, 255, 255, 0.1);
           backdrop-filter: blur(10px);
@@ -173,7 +198,9 @@ export default function CallAgent() {
         <div className="bg-gradient-to-r from-orange-100 via-pink-100 to-blue-100 px-4 py-3 text-center border-b animate-slideIn">
           <div className="flex items-center justify-center gap-2 text-sm">
             <Sparkles className="w-4 h-4 text-orange-600 animate-pulse" />
-            <span className="font-medium text-gray-700">AI-Powered Outbound Call Automation</span>
+            <span className="font-medium text-gray-700">
+              AI-Powered Outbound Call Automation
+            </span>
             <a
               href="#"
               className="text-blue-600 hover:text-blue-800 font-medium flex items-center gap-1 hover:scale-105 transition-transform"
@@ -197,7 +224,9 @@ export default function CallAgent() {
               <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
                 <PhoneCall className="w-4 h-4 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-900">VoiceAgent</span>
+              <span className="text-xl font-bold text-gray-900">
+                VoiceAgent
+              </span>
             </div>
 
             <nav className="hidden lg:flex items-center gap-8">
@@ -210,10 +239,16 @@ export default function CallAgent() {
                   <ChevronDown className="w-4 h-4 group-hover:rotate-180 transition-transform" />
                 </div>
               ))}
-              <a href="#" className="text-gray-700 hover:text-gray-900 font-medium transition-all hover:scale-105">
+              <a
+                href="#"
+                className="text-gray-700 hover:text-gray-900 font-medium transition-all hover:scale-105"
+              >
                 Documentation
               </a>
-              <a href="#" className="text-gray-700 hover:text-gray-900 font-medium transition-all hover:scale-105">
+              <a
+                href="#"
+                className="text-gray-700 hover:text-gray-900 font-medium transition-all hover:scale-105"
+              >
                 Support
               </a>
             </nav>
@@ -237,7 +272,11 @@ export default function CallAgent() {
                 className="lg:hidden hover:scale-105 transition-transform"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {isMobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
               </Button>
             </div>
           </div>
@@ -247,10 +286,19 @@ export default function CallAgent() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden animate-fadeIn">
-          <div className="fixed inset-0 bg-black/20 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
+          <div
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
           <div className="fixed top-0 right-0 h-full w-80 glass-effect shadow-xl p-6 animate-slideUp">
             <nav className="space-y-4">
-              {["Features", "Solutions", "Pricing", "Documentation", "Support"].map((item) => (
+              {[
+                "Features",
+                "Solutions",
+                "Pricing",
+                "Documentation",
+                "Support",
+              ].map((item) => (
                 <a
                   key={item}
                   href="#"
@@ -260,7 +308,10 @@ export default function CallAgent() {
                 </a>
               ))}
               <div className="pt-4 space-y-3">
-                <Button variant="outline" className="w-full bg-transparent hover:scale-105 transition-transform">
+                <Button
+                  variant="outline"
+                  className="w-full bg-transparent hover:scale-105 transition-transform"
+                >
                   CONTACT SALES
                 </Button>
                 <Button
@@ -283,21 +334,28 @@ export default function CallAgent() {
               <AnimatedSection delay={200}>
                 <div className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-100 to-purple-100 px-4 py-2 rounded-full text-sm font-medium text-blue-800 mb-8 animate-float">
                   <Target className="w-4 h-4" />
-                  <TypewriterText text="AI-Powered Outbound Call Automation" speed={50} />
+                  <TypewriterText
+                    text="AI-Powered Outbound Call Automation"
+                    speed={50}
+                  />
                 </div>
               </AnimatedSection>
 
               <AnimatedSection delay={400}>
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight">
-                  Automate Your <span className="gradient-text">Outbound Calls</span> with AI Voice Agents
+                  Automate Your{" "}
+                  <span className="gradient-text">Outbound Calls</span> with AI
+                  Voice Agents
                 </h1>
               </AnimatedSection>
 
               <AnimatedSection delay={600}>
                 <p className="text-lg md:text-xl text-gray-600 mb-10 max-w-3xl mx-auto lg:mx-0 leading-relaxed">
-                  Our AI-powered call center solution automates outbound calls by deploying intelligent voice agents
-                  that engage customers, explain your product, and detect interest in real time. When a customer
-                  expresses genuine interest, the AI seamlessly transfers the call to a live agent to complete the sale.
+                  Our AI-powered call center solution automates outbound calls
+                  by deploying intelligent voice agents that engage customers,
+                  explain your product, and detect interest in real time. When a
+                  customer expresses genuine interest, the AI seamlessly
+                  transfers the call to a live agent to complete the sale.
                 </p>
               </AnimatedSection>
 
@@ -386,10 +444,15 @@ export default function CallAgent() {
           <div className="max-w-7xl mx-auto">
             <AnimatedSection>
               <div className="text-center mb-16">
-                <p className="text-sm font-semibold text-blue-600 mb-2 tracking-wider">KEY FEATURES</p>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Powerful AI Call Automation</h2>
+                <p className="text-sm font-semibold text-blue-600 mb-2 tracking-wider">
+                  KEY FEATURES
+                </p>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Powerful AI Call Automation
+                </h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Experience the future of outbound calling with our comprehensive AI-powered solution
+                  Experience the future of outbound calling with our
+                  comprehensive AI-powered solution
                 </p>
               </div>
             </AnimatedSection>
@@ -477,11 +540,18 @@ export default function CallAgent() {
                       >
                         {feature.icon}
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-                      <p className="text-gray-600 leading-relaxed mb-4">{feature.description}</p>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed mb-4">
+                        {feature.description}
+                      </p>
                       <ul className="space-y-2">
                         {feature.features.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                          <li
+                            key={idx}
+                            className="flex items-start gap-2 text-sm text-gray-600"
+                          >
                             <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                             <span>{item}</span>
                           </li>
@@ -502,10 +572,15 @@ export default function CallAgent() {
           <div className="max-w-7xl mx-auto">
             <AnimatedSection>
               <div className="text-center mb-16">
-                <p className="text-sm font-semibold text-blue-600 mb-2 tracking-wider">HOW IT WORKS</p>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Simple 6-Step Process</h2>
+                <p className="text-sm font-semibold text-blue-600 mb-2 tracking-wider">
+                  HOW IT WORKS
+                </p>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Simple 6-Step Process
+                </h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  From contact upload to successful conversions, our streamlined process ensures maximum efficiency
+                  From contact upload to successful conversions, our streamlined
+                  process ensures maximum efficiency
                 </p>
               </div>
             </AnimatedSection>
@@ -572,8 +647,12 @@ export default function CallAgent() {
                       <div className="text-6xl font-bold text-gray-100 mb-4 group-hover:text-blue-100 transition-colors absolute top-4 right-4">
                         {step.number}
                       </div>
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4">{step.title}</h3>
-                      <p className="text-gray-600 leading-relaxed">{step.description}</p>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                        {step.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed">
+                        {step.description}
+                      </p>
                     </CardContent>
                   </Card>
                 </AnimatedSection>
@@ -592,10 +671,13 @@ export default function CallAgent() {
                 <CardContent className="p-12 text-center relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
                   <div className="relative z-10">
-                    <h3 className="text-3xl font-bold mb-4">Experience Voice AI in Action</h3>
+                    <h3 className="text-3xl font-bold mb-4">
+                      Experience Voice AI in Action
+                    </h3>
                     <p className="text-cyan-100 mb-8 max-w-2xl mx-auto text-lg">
-                      Natural, smooth, and empathetic AI conversations that qualify leads and boost conversions without
-                      overloading your team
+                      Natural, smooth, and empathetic AI conversations that
+                      qualify leads and boost conversions without overloading
+                      your team
                     </p>
                     <VoiceWaveSVG />
                     <div className="mt-8">
@@ -624,10 +706,15 @@ export default function CallAgent() {
           <div className="max-w-7xl mx-auto">
             <AnimatedSection>
               <div className="text-center mb-16">
-                <p className="text-sm font-semibold text-blue-600 mb-2 tracking-wider">ENTERPRISE READY</p>
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Built for Scale and Security</h2>
+                <p className="text-sm font-semibold text-blue-600 mb-2 tracking-wider">
+                  ENTERPRISE READY
+                </p>
+                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Built for Scale and Security
+                </h2>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Deploy AI voice agents that handle thousands of concurrent calls with enterprise-grade reliability
+                  Deploy AI voice agents that handle thousands of concurrent
+                  calls with enterprise-grade reliability
                 </p>
               </div>
             </AnimatedSection>
@@ -637,7 +724,8 @@ export default function CallAgent() {
                 {
                   icon: <Zap className="w-8 h-8" />,
                   title: "Lightning Fast",
-                  description: "Sub-second response times with optimized voice processing and real-time streaming.",
+                  description:
+                    "Sub-second response times with optimized voice processing and real-time streaming.",
                   gradient: "from-yellow-400 to-orange-500",
                   metric: "<500ms",
                   metricLabel: "Response Time",
@@ -645,7 +733,8 @@ export default function CallAgent() {
                 {
                   icon: <Lock className="w-8 h-8" />,
                   title: "Enterprise Security",
-                  description: "SOC 2 compliant with end-to-end encryption and comprehensive audit logs.",
+                  description:
+                    "SOC 2 compliant with end-to-end encryption and comprehensive audit logs.",
                   gradient: "from-green-400 to-blue-500",
                   metric: "SOC 2",
                   metricLabel: "Compliant",
@@ -653,7 +742,8 @@ export default function CallAgent() {
                 {
                   icon: <Globe className="w-8 h-8" />,
                   title: "Global Scale",
-                  description: "Deploy across multiple regions with automatic failover and load balancing.",
+                  description:
+                    "Deploy across multiple regions with automatic failover and load balancing.",
                   gradient: "from-purple-400 to-pink-500",
                   metric: "99.9%",
                   metricLabel: "Uptime",
@@ -661,7 +751,8 @@ export default function CallAgent() {
                 {
                   icon: <BarChart3 className="w-8 h-8" />,
                   title: "Advanced Analytics",
-                  description: "Real-time monitoring and detailed analytics for all your voice interactions.",
+                  description:
+                    "Real-time monitoring and detailed analytics for all your voice interactions.",
                   gradient: "from-blue-400 to-cyan-500",
                   metric: "Real-time",
                   metricLabel: "Insights",
@@ -669,7 +760,8 @@ export default function CallAgent() {
                 {
                   icon: <Users className="w-8 h-8" />,
                   title: "Team Collaboration",
-                  description: "Built-in tools for team management, role-based access, and workflow automation.",
+                  description:
+                    "Built-in tools for team management, role-based access, and workflow automation.",
                   gradient: "from-indigo-400 to-purple-500",
                   metric: "Unlimited",
                   metricLabel: "Team Size",
@@ -677,7 +769,8 @@ export default function CallAgent() {
                 {
                   icon: <Mic className="w-8 h-8" />,
                   title: "Natural Conversations",
-                  description: "Advanced NLP and voice synthesis for human-like conversation experiences.",
+                  description:
+                    "Advanced NLP and voice synthesis for human-like conversation experiences.",
                   gradient: "from-pink-400 to-red-500",
                   metric: "98%",
                   metricLabel: "Accuracy",
@@ -691,8 +784,12 @@ export default function CallAgent() {
                       >
                         {feature.icon}
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
-                      <p className="text-gray-600 leading-relaxed mb-4">{feature.description}</p>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed mb-4">
+                        {feature.description}
+                      </p>
                       <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                         <div>
                           <div
@@ -700,7 +797,9 @@ export default function CallAgent() {
                           >
                             {feature.metric}
                           </div>
-                          <div className="text-sm text-gray-500">{feature.metricLabel}</div>
+                          <div className="text-sm text-gray-500">
+                            {feature.metricLabel}
+                          </div>
                         </div>
                         <div
                           className={`w-3 h-3 rounded-full bg-gradient-to-r ${feature.gradient} animate-pulse`}
@@ -721,7 +820,9 @@ export default function CallAgent() {
           <div className="max-w-7xl mx-auto">
             <AnimatedSection>
               <div className="mb-4">
-                <p className="text-sm font-semibold text-blue-600 mb-2 tracking-wider text-center">SUCCESS STORIES</p>
+                <p className="text-sm font-semibold text-blue-600 mb-2 tracking-wider text-center">
+                  SUCCESS STORIES
+                </p>
                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-16">
                   <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 lg:mb-0">
                     See Why 5000+ Sales Teams Choose Call Agent AI
@@ -743,17 +844,22 @@ export default function CallAgent() {
                   <div className="relative z-10">
                     <div className="max-w-4xl">
                       <blockquote className="text-2xl lg:text-3xl font-medium mb-8 leading-relaxed">
-                        "Our AI agents now handle 80% of our outbound calls, qualifying leads 3x faster than our
-                        previous manual process. The seamless handoff to our sales team has increased our conversion
-                        rate by 45%."
+                        "Our AI agents now handle 80% of our outbound calls,
+                        qualifying leads 3x faster than our previous manual
+                        process. The seamless handoff to our sales team has
+                        increased our conversion rate by 45%."
                       </blockquote>
                       <div className="flex items-center gap-4">
                         <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
                           <span className="font-bold text-xl">M</span>
                         </div>
                         <div>
-                          <div className="font-semibold text-lg">Michael Rodriguez</div>
-                          <div className="text-blue-200">VP of Sales, TechFlow Solutions</div>
+                          <div className="font-semibold text-lg">
+                            Michael Rodriguez
+                          </div>
+                          <div className="text-blue-200">
+                            VP of Sales, TechFlow Solutions
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -761,16 +867,28 @@ export default function CallAgent() {
                     {/* Enhanced Stats */}
                     <div className="absolute right-8 top-8 space-y-4">
                       <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:scale-105 transition-transform">
-                        <div className="text-4xl font-bold text-orange-400 mb-2">3x</div>
-                        <div className="text-sm text-orange-200">Faster Lead Qualification</div>
+                        <div className="text-4xl font-bold text-orange-400 mb-2">
+                          3x
+                        </div>
+                        <div className="text-sm text-orange-200">
+                          Faster Lead Qualification
+                        </div>
                       </div>
                       <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:scale-105 transition-transform">
-                        <div className="text-4xl font-bold text-green-400 mb-2">80%</div>
-                        <div className="text-sm text-green-200">Calls Automated</div>
+                        <div className="text-4xl font-bold text-green-400 mb-2">
+                          80%
+                        </div>
+                        <div className="text-sm text-green-200">
+                          Calls Automated
+                        </div>
                       </div>
                       <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center hover:scale-105 transition-transform">
-                        <div className="text-4xl font-bold text-blue-400 mb-2">45%</div>
-                        <div className="text-sm text-blue-200">Higher Conversion</div>
+                        <div className="text-4xl font-bold text-blue-400 mb-2">
+                          45%
+                        </div>
+                        <div className="text-sm text-blue-200">
+                          Higher Conversion
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -786,10 +904,13 @@ export default function CallAgent() {
         <section className="relative z-10 px-4 py-20 md:px-6 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20"></div>
           <div className="max-w-4xl mx-auto text-center relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Transform Your Outbound Sales?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Ready to Transform Your Outbound Sales?
+            </h2>
             <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-              Join thousands of sales teams already using VoiceAgent to automate their outbound calling, qualify leads
-              faster, and boost conversions without overloading their team.
+              Join thousands of sales teams already using VoiceAgent to automate
+              their outbound calling, qualify leads faster, and boost
+              conversions without overloading their team.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 text-lg font-semibold hover:scale-105 transition-all shadow-xl rounded-xl">
@@ -816,11 +937,14 @@ export default function CallAgent() {
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
                     <PhoneCall className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-xl font-bold text-gray-900">VoiceAgent</span>
+                  <span className="text-xl font-bold text-gray-900">
+                    VoiceAgent
+                  </span>
                 </div>
                 <p className="text-gray-600 mb-4">
-                  The leading platform for AI-powered outbound call automation. Qualify leads faster and boost
-                  conversions with intelligent voice agents.
+                  The leading platform for AI-powered outbound call automation.
+                  Qualify leads faster and boost conversions with intelligent
+                  voice agents.
                 </p>
               </div>
 
@@ -839,11 +963,16 @@ export default function CallAgent() {
                 },
               ].map((section, index) => (
                 <div key={index}>
-                  <h4 className="font-semibold text-gray-900 mb-4">{section.title}</h4>
+                  <h4 className="font-semibold text-gray-900 mb-4">
+                    {section.title}
+                  </h4>
                   <ul className="space-y-2 text-gray-600">
                     {section.links.map((link, linkIndex) => (
                       <li key={linkIndex}>
-                        <a href="#" className="hover:text-gray-900 transition-colors hover:scale-105 inline-block">
+                        <a
+                          href="#"
+                          className="hover:text-gray-900 transition-colors hover:scale-105 inline-block"
+                        >
                           {link}
                         </a>
                       </li>
@@ -854,10 +983,16 @@ export default function CallAgent() {
             </div>
 
             <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center">
-              <p className="text-gray-600 text-sm">© 2024 VoiceAgent. All rights reserved.</p>
+              <p className="text-gray-600 text-sm">
+                © 2024 VoiceAgent. All rights reserved.
+              </p>
               <div className="flex gap-6 mt-4 md:mt-0">
                 {["Twitter", "LinkedIn", "GitHub"].map((social, index) => (
-                  <a key={index} href="#" className="text-gray-400 hover:text-gray-600 transition-all hover:scale-110">
+                  <a
+                    key={index}
+                    href="#"
+                    className="text-gray-400 hover:text-gray-600 transition-all hover:scale-110"
+                  >
                     <span className="sr-only">{social}</span>
                     <div className="w-5 h-5 bg-gray-400 rounded hover:bg-gray-600 transition-colors"></div>
                   </a>
@@ -871,5 +1006,5 @@ export default function CallAgent() {
       {/* Enhanced Demo Modal */}
       <EnhancedDemo isOpen={isDemoOpen} onClose={() => setIsDemoOpen(false)} />
     </div>
-  )
+  );
 }
