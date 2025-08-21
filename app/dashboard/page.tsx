@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import CustomersPage from "../pages/customers";
 import ProductsPage from "../pages/products";
+import Dashboard from "../pages/dashboard";
 
 const TabsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
@@ -45,7 +46,7 @@ const TabsPage: React.FC = () => {
 
       {/* Tab Content */}
       <div className="p-6 border rounded-lg shadow-md min-h-[300px]">
-        {activeTab === "dashboard" && <p>📊 Dashboard Content (blank)</p>}
+        {activeTab === "dashboard" && <Dashboard />}
         {activeTab === "customers" && <CustomersPage />}
         {activeTab === "products" && <ProductsPage />}
       </div>
