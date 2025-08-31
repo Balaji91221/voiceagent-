@@ -3,8 +3,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Phone, Users, Package, X, Check } from "lucide-react";
+import { Phone, Users, Package, X, Check, TestTube, LogOut } from "lucide-react";
 import { BASE_URL } from "@/lib/constants";
 
 type Customer = {
@@ -35,6 +36,8 @@ const Dashboard: React.FC = () => {
   const [isCallModalOpen, setIsCallModalOpen] = useState(false);
   const [callNotes, setCallNotes] = useState("");
   const [loading, setLoading] = useState(true);
+  const [testPhoneNumber, setTestPhoneNumber] = useState("");
+  const [testSelectedProduct, setTestSelectedProduct] = useState("");
 
   // Fetch customers and products
   const fetchData = async () => {
@@ -148,6 +151,58 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  const makeTestCall = async () => {
+    try {
+      if (!testPhoneNumber.trim()) {
+        toast.error("Please enter a phone number");
+        return;
+      }
+      if (!testSelectedProduct) {
+        toast.error("Please select a product");
+        return;
+      }
+
+      const selectedProductInfo = products.find(p => p.id === testSelectedProduct);
+      if (!selectedProductInfo) {
+        toast.error("Product data not found");
+        return;
+      }
+
+      const callData = {
+        phone_number: testPhoneNumber.trim(),
+        custom_instructions: selectedProductInfo.description
+      };
+
+      const response = await fetch(`https://voice-call.subhadeep.xyz/make-call`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(callData)
+      });
+
+      if (response.ok) {
+        toast.success(
+          `📞 Test call initiated to ${testPhoneNumber} about ${selectedProductInfo.name}`
+        );
+        // Reset test form
+        setTestPhoneNumber("");
+        setTestSelectedProduct("");
+      } else {
+        throw new Error("Test call initiation failed");
+      }
+    } catch (error) {
+      toast.error("Failed to initiate test call");
+      console.error("Test call error:", error);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/";
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -161,6 +216,19 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Header with Logout */}
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+        <Button
+          onClick={handleLogout}
+          variant="outline"
+          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+        >
+          <LogOut className="h-4 w-4 mr-2" />
+          Logout
+        </Button>
+      </div>
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
@@ -199,6 +267,93 @@ const Dashboard: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Test Calling Section */}
+      <Card className="border-orange-200 bg-orange-50/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-orange-700">
+            <TestTube className="h-5 w-5" />
+            Test Calling
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div>
+              <Label htmlFor="testPhone" className="text-base font-medium">
+                Phone Number
+              </Label>
+              <Input
+                id="testPhone"
+                type="tel"
+                value={testPhoneNumber}
+                onChange={(e) => setTestPhoneNumber(e.target.value)}
+                placeholder="+1234567890"
+                className="mt-1"
+              />
+            </div>
+
+            <div>
+              <Label className="text-base font-medium">
+                Select Product
+              </Label>
+              <div className="mt-1 max-h-32 overflow-y-auto border rounded-lg">
+                {products.length > 0 ? (
+                  products.map((product) => (
+                    <div
+                      key={product.id}
+                      className={`p-2 cursor-pointer transition-all duration-200 border-b last:border-b-0 ${testSelectedProduct === product.id
+                        ? "bg-orange-100 text-orange-900"
+                        : "hover:bg-gray-50"
+                        }`}
+                      onClick={() => setTestSelectedProduct(product.id)}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <p className="font-medium text-sm">
+                            {product.name}
+                          </p>
+                          <p className="text-xs text-gray-600 truncate">
+                            {product.keyDetails}
+                          </p>
+                        </div>
+                        {testSelectedProduct === product.id && (
+                          <Check className="h-4 w-4 text-orange-600 flex-shrink-0" />
+                        )}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="p-4 text-center text-gray-500 text-sm">
+                    No products available
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-end">
+              <Button
+                onClick={makeTestCall}
+                disabled={!testPhoneNumber.trim() || !testSelectedProduct}
+                className="w-full bg-orange-600 hover:bg-orange-700"
+              >
+                <Phone className="h-4 w-4 mr-2" />
+                Make Test Call
+              </Button>
+            </div>
+          </div>
+
+          {testSelectedProduct && (
+            <div className="mt-4 p-3 bg-white border border-orange-200 rounded-lg">
+              <p className="text-sm font-medium text-orange-800">
+                Selected Product: {products.find(p => p.id === testSelectedProduct)?.name}
+              </p>
+              <p className="text-xs text-gray-600 mt-1">
+                {products.find(p => p.id === testSelectedProduct)?.description}
+              </p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Customer Multi-Select */}
