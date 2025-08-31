@@ -105,25 +105,38 @@ const Dashboard: React.FC = () => {
 
   const makeCall = async () => {
     try {
-      // Here you would typically make an API call to initiate the calls
-      // const callData = {
-      //   customerIds: selectedCustomers,
-      //   productId: selectedProduct,
-      //   notes: callNotes
-      // };
+      // Get the first selected customer and product details
+      const firstCustomer = customers.find(c => c.id === selectedCustomers[0]);
+      const selectedProductInfo = products.find(p => p.id === selectedProduct);
 
-      // await fetch(`${BASE_URL}/calls`, {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: `Bearer ${localStorage.getItem("token")}`,
-      //   },
-      //   body: JSON.stringify(callData),
-      // });
+      if (!firstCustomer || !selectedProductInfo) {
+        toast.error("Customer or product data not found");
+        return;
+      }
 
-      toast.success(
-        `📞 Calling ${selectedCustomers.length} customer(s) about ${selectedProductData?.name}`
-      );
+      // Send only first customer's phone and product description
+      const callData = {
+        phone_number: firstCustomer.phone,
+        custom_instructions: selectedProductInfo.description
+      };
+
+      const response = await fetch(`https://voice-call.subhadeep.xyz/make-call`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(callData)
+      });
+
+      if (response.ok) {
+        toast.success(
+          `📞 Calling ${firstCustomer.name} (${firstCustomer.phone}) about ${selectedProductInfo.name}`
+        );
+      } else {
+        throw new Error("Call initiation failed");
+      }
+
       setIsCallModalOpen(false);
       setCallNotes("");
       // Reset selections after call
@@ -202,11 +215,10 @@ const Dashboard: React.FC = () => {
                 customers.map((customer) => (
                   <div
                     key={customer.id}
-                    className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
-                      selectedCustomers.includes(customer.id)
-                        ? "bg-blue-50 border-blue-500 shadow-sm"
-                        : "hover:bg-gray-50 hover:border-gray-300"
-                    }`}
+                    className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${selectedCustomers.includes(customer.id)
+                      ? "bg-blue-50 border-blue-500 shadow-sm"
+                      : "hover:bg-gray-50 hover:border-gray-300"
+                      }`}
                     onClick={() => handleCustomerSelect(customer.id)}
                   >
                     <div className="flex items-center justify-between">
@@ -280,11 +292,10 @@ const Dashboard: React.FC = () => {
                 products.map((product) => (
                   <div
                     key={product.id}
-                    className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
-                      selectedProduct === product.id
-                        ? "bg-green-50 border-green-500 shadow-sm"
-                        : "hover:bg-gray-50 hover:border-gray-300"
-                    }`}
+                    className={`p-3 border rounded-lg cursor-pointer transition-all duration-200 ${selectedProduct === product.id
+                      ? "bg-green-50 border-green-500 shadow-sm"
+                      : "hover:bg-gray-50 hover:border-gray-300"
+                      }`}
                     onClick={() => setSelectedProduct(product.id)}
                   >
                     <div className="flex items-center justify-between">

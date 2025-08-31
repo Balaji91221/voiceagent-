@@ -13,31 +13,28 @@ const TabsPage: React.FC = () => {
     <div className="w-full p-6">
       <div className="flex gap-4 border-b pb-2 mb-4">
         <button
-          className={`px-4 py-2 rounded-t-lg ${
-            activeTab === "dashboard"
+          className={`px-4 py-2 rounded-t-lg ${activeTab === "dashboard"
               ? "bg-blue-500 text-white"
               : "bg-gray-200 text-gray-700"
-          }`}
+            }`}
           onClick={() => setActiveTab("dashboard")}
         >
           Dashboard
         </button>
         <button
-          className={`px-4 py-2 rounded-t-lg ${
-            activeTab === "customers"
+          className={`px-4 py-2 rounded-t-lg ${activeTab === "customers"
               ? "bg-blue-500 text-white"
               : "bg-gray-200 text-gray-700"
-          }`}
+            }`}
           onClick={() => setActiveTab("customers")}
         >
           Manage Customers
         </button>
         <button
-          className={`px-4 py-2 rounded-t-lg ${
-            activeTab === "products"
+          className={`px-4 py-2 rounded-t-lg ${activeTab === "products"
               ? "bg-blue-500 text-white"
               : "bg-gray-200 text-gray-700"
-          }`}
+            }`}
           onClick={() => setActiveTab("products")}
         >
           Manage Products
