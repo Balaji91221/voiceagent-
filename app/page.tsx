@@ -3,7 +3,7 @@
 import type React from "react";
 import { CheckCircle } from "lucide-react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -39,6 +39,7 @@ import {
   TypewriterText,
 } from "@/components/enhanced-animations";
 import { HeroSVG, VoiceWaveSVG } from "@/components/svg-graphics";
+import { useRouter } from "next/navigation";
 
 function AnimatedSection({
   children,
@@ -54,9 +55,8 @@ function AnimatedSection({
   return (
     <div
       ref={ref}
-      className={`transition-all duration-1000 ease-out ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-      } ${className}`}
+      className={`transition-all duration-1000 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        } ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -67,6 +67,10 @@ function AnimatedSection({
 export default function CallAgent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    router.push("/login");
+  }, [])
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
