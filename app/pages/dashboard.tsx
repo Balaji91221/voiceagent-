@@ -258,7 +258,7 @@ const Dashboard: React.FC = () => {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center">
-              <Phone className="h-8 w-8 text-orange-500" />
+              <Phone className="h-8 w-8 text-blue-500" />
               <div className="ml-4">
                 <p className="text-2xl font-bold">{selectedCustomers.length}</p>
                 <p className="text-gray-600">Selected for Call</p>
@@ -269,17 +269,20 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Test Calling Section */}
-      <Card className="border-orange-200 bg-orange-50/50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-orange-700">
+      <Card className="border-blue-200 bg-blue-50/50">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2 text-blue-700 text-lg font-semibold">
             <TestTube className="h-5 w-5" />
             Test Calling
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="testPhone" className="text-base font-medium">
+
+        <CardContent className="space-y-6">
+          {/* Inputs Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Phone Input */}
+            <div className="space-y-2">
+              <Label htmlFor="testPhone" className="text-sm font-medium text-gray-700">
                 Phone Number
               </Label>
               <Input
@@ -288,36 +291,36 @@ const Dashboard: React.FC = () => {
                 value={testPhoneNumber}
                 onChange={(e) => setTestPhoneNumber(e.target.value)}
                 placeholder="+1234567890"
-                className="mt-1"
+                className="h-11"
               />
             </div>
 
-            <div>
-              <Label className="text-base font-medium">
+            {/* Product Select */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">
                 Select Product
               </Label>
-              <div className="mt-1 max-h-32 overflow-y-auto border rounded-lg">
+              <div className="max-h-36 overflow-y-auto border rounded-lg divide-y bg-white">
                 {products.length > 0 ? (
                   products.map((product) => (
                     <div
                       key={product.id}
-                      className={`p-2 cursor-pointer transition-all duration-200 border-b last:border-b-0 ${testSelectedProduct === product.id
-                        ? "bg-orange-100 text-orange-900"
-                        : "hover:bg-gray-50"
+                      className={`p-3 cursor-pointer transition-colors ${testSelectedProduct === product.id
+                          ? "bg-blue-100 text-blue-900"
+                          : "hover:bg-gray-50"
                         }`}
                       onClick={() => setTestSelectedProduct(product.id)}
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <p className="font-medium text-sm">
-                            {product.name}
-                          </p>
-                          <p className="text-xs text-gray-600 truncate">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex-1 space-y-0.5">
+                          <p className="font-medium text-sm">{product.name}</p>
+                          <p className="text-sm text-gray-700">{product.description}</p>
+                          <p className="text-xs text-gray-500 truncate">
                             {product.keyDetails}
                           </p>
                         </div>
                         {testSelectedProduct === product.id && (
-                          <Check className="h-4 w-4 text-orange-600 flex-shrink-0" />
+                          <Check className="h-4 w-4 text-blue-600 flex-shrink-0" />
                         )}
                       </div>
                     </div>
@@ -329,31 +332,35 @@ const Dashboard: React.FC = () => {
                 )}
               </div>
             </div>
-
-            <div className="flex items-end">
-              <Button
-                onClick={makeTestCall}
-                disabled={!testPhoneNumber.trim() || !testSelectedProduct}
-                className="w-full bg-orange-600 hover:bg-orange-700"
-              >
-                <Phone className="h-4 w-4 mr-2" />
-                Make Test Call
-              </Button>
-            </div>
           </div>
 
+          {/* Call Button */}
+          <div>
+            <Button
+              onClick={makeTestCall}
+              disabled={!testPhoneNumber.trim() || !testSelectedProduct}
+              className="w-full h-11 bg-blue-600 hover:bg-blue-700"
+            >
+              <Phone className="h-4 w-4 mr-2" />
+              Make Test Call
+            </Button>
+          </div>
+
+          {/* Selected Product Info */}
           {testSelectedProduct && (
-            <div className="mt-4 p-3 bg-white border border-orange-200 rounded-lg">
-              <p className="text-sm font-medium text-orange-800">
-                Selected Product: {products.find(p => p.id === testSelectedProduct)?.name}
+            <div className="p-4 bg-white border border-blue-200 rounded-lg">
+              <p className="text-sm font-medium text-blue-800">
+                Selected Product:{" "}
+                {products.find((p) => p.id === testSelectedProduct)?.name}
               </p>
               <p className="text-xs text-gray-600 mt-1">
-                {products.find(p => p.id === testSelectedProduct)?.description}
+                {products.find((p) => p.id === testSelectedProduct)?.description}
               </p>
             </div>
           )}
         </CardContent>
       </Card>
+
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Customer Multi-Select */}
