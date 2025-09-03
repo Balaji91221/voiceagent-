@@ -278,10 +278,10 @@ const Dashboard: React.FC = () => {
         </CardHeader>
 
         <CardContent className="space-y-6">
-          {/* Inputs Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Inputs Grid - Side by Side */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Phone Input */}
-            <div className="space-y-2">
+            <div className="space-y-2 col-span-1">
               <Label htmlFor="testPhone" className="text-sm font-medium text-gray-700">
                 Phone Number
               </Label>
@@ -293,31 +293,38 @@ const Dashboard: React.FC = () => {
                 placeholder="+1234567890"
                 className="h-11"
               />
+              <div>
+                <Button
+                  onClick={makeTestCall}
+                  disabled={!testPhoneNumber.trim() || !testSelectedProduct}
+                  className=" h-11 bg-blue-600 hover:bg-blue-700"
+                >
+                  <Phone className="h-4 w-4 mr-2" />
+                  Make Test Call
+                </Button>
+              </div>
+
             </div>
 
             {/* Product Select */}
-            <div className="space-y-2">
+            <div className="space-y-2 w-full">
               <Label className="text-sm font-medium text-gray-700">
                 Select Product
               </Label>
-              <div className="max-h-36 overflow-y-auto border rounded-lg divide-y bg-white">
+              <div className="max-h-36 overflow-y-auto w-full border rounded-lg divide-y bg-white">
                 {products.length > 0 ? (
                   products.map((product) => (
                     <div
                       key={product.id}
                       className={`p-3 cursor-pointer transition-colors ${testSelectedProduct === product.id
-                          ? "bg-blue-100 text-blue-900"
-                          : "hover:bg-gray-50"
+                        ? "bg-blue-100 text-blue-900"
+                        : "hover:bg-gray-50"
                         }`}
                       onClick={() => setTestSelectedProduct(product.id)}
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div className="flex-1 space-y-0.5">
                           <p className="font-medium text-sm">{product.name}</p>
-                          <p className="text-sm text-gray-700">{product.description}</p>
-                          <p className="text-xs text-gray-500 truncate">
-                            {product.keyDetails}
-                          </p>
                         </div>
                         {testSelectedProduct === product.id && (
                           <Check className="h-4 w-4 text-blue-600 flex-shrink-0" />
@@ -331,40 +338,39 @@ const Dashboard: React.FC = () => {
                   </div>
                 )}
               </div>
+
             </div>
+            {/* Selected Product Info */}
+            {testSelectedProduct && (
+              <div className="p-4 bg-white border border-blue-200 rounded-lg">
+                <p className="text-sm font-medium text-blue-800">
+                  Selected Product:{" "}
+                  {products.find((p) => p.id === testSelectedProduct)?.name}
+                </p>
+                <p className="text-xs text-gray-600 mt-1">
+                  {products.find((p) => p.id === testSelectedProduct)?.description}
+                </p>
+              </div>
+            )}
           </div>
+
 
           {/* Call Button */}
-          <div>
-            <Button
-              onClick={makeTestCall}
-              disabled={!testPhoneNumber.trim() || !testSelectedProduct}
-              className="w-full h-11 bg-blue-600 hover:bg-blue-700"
-            >
-              <Phone className="h-4 w-4 mr-2" />
-              Make Test Call
-            </Button>
-          </div>
 
-          {/* Selected Product Info */}
-          {testSelectedProduct && (
-            <div className="p-4 bg-white border border-blue-200 rounded-lg">
-              <p className="text-sm font-medium text-blue-800">
-                Selected Product:{" "}
-                {products.find((p) => p.id === testSelectedProduct)?.name}
-              </p>
-              <p className="text-xs text-gray-600 mt-1">
-                {products.find((p) => p.id === testSelectedProduct)?.description}
-              </p>
-            </div>
-          )}
+
         </CardContent>
       </Card>
 
+    </div>
+  );
+};
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Customer Multi-Select */}
-        <Card>
+export default Dashboard;
+
+
+{/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6"> */ }
+{/* Customer Multi-Select */ }
+{/* <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Users className="h-5 w-5" />
@@ -412,10 +418,10 @@ const Dashboard: React.FC = () => {
                   </p>
                 </div>
               )}
-            </div>
+            </div> */}
 
-            {/* Select All / Clear All buttons */}
-            {customers.length > 0 && (
+{/* Select All / Clear All buttons */ }
+{/* {customers.length > 0 && (
               <div className="mt-4 flex gap-2">
                 <Button
                   variant="outline"
@@ -438,10 +444,10 @@ const Dashboard: React.FC = () => {
               </div>
             )}
           </CardContent>
-        </Card>
+        </Card> */}
 
-        {/* Product Single Select */}
-        <Card>
+{/* Product Single Select */ }
+{/* <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Package className="h-5 w-5" />
@@ -492,10 +498,10 @@ const Dashboard: React.FC = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
 
-      {/* Call Section */}
-      <Card>
+{/* Call Section */ }
+{/* <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Phone className="h-5 w-5" />
@@ -585,10 +591,10 @@ const Dashboard: React.FC = () => {
             </Button>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
-      {/* Call Modal */}
-      {isCallModalOpen && (
+{/* Call Modal */ }
+{/* {isCallModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <Card className="w-full max-w-lg">
             <CardHeader className="flex flex-row items-center justify-between">
@@ -662,10 +668,5 @@ const Dashboard: React.FC = () => {
               </div>
             </CardContent>
           </Card>
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default Dashboard;
+        </div> */}
+{/* )} */ }
